@@ -4,6 +4,7 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.media.MediaMetadataRetriever
@@ -30,7 +31,10 @@ import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DefaultDataSource
 import androidx.media3.exoplayer.DefaultLoadControl
+import androidx.media3.exoplayer.DefaultRenderersFactory
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.audio.AudioSink
+import androidx.media3.exoplayer.audio.DefaultAudioSink
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import androidx.media3.session.CommandButton
 import androidx.media3.session.MediaNotification
@@ -42,6 +46,7 @@ class MusicService : MediaSessionService() {
 
     private var mediaSession: MediaSession? = null
     private var player: ExoPlayer? = null
+    private var rotationProcessor: RotationAudioProcessor? = null
     private var lastActionFactory: MediaNotification.ActionFactory? = null
     private var lastSession: MediaSession? = null
     private var consecutiveErrors = 0
@@ -137,7 +142,10 @@ class MusicService : MediaSessionService() {
 
         fun set8D(enabled: Boolean) {
             is8D = enabled
-            instance?.applyEffects()
+            instance?.let {
+                it.rotationProcessor?.enabled = enabled
+                it.applyEffects()
+            }
         }
 
         fun setBassStrength(value: Int) {
@@ -201,11 +209,15 @@ class MusicService : MediaSessionService() {
 
         val mediaSourceFactory = DefaultMediaSourceFactory(DefaultDataSource.Factory(this))
 
+        val rotation = RotationAudioProcessor().apply { enabled = is8D }
+        rotationProcessor = rotation
+
         player = ExoPlayer.Builder(this)
             .setAudioAttributes(audioAttributes, true)
             .setHandleAudioBecomingNoisy(true)
             .setLoadControl(loadControl)
             .setMediaSourceFactory(mediaSourceFactory)
+            .setRenderersFactory(RotationRenderersFactory(this, rotation))
             .build()
             .apply {
                 playWhenReady = false
@@ -451,12 +463,7 @@ class MusicService : MediaSessionService() {
                 val levels = presetLevels(eqPreset, numBands)
                 val baseFactor = 0.2f + (eqIntensity / 100f) * 1.4f
                 for (i in 0 until numBands) {
-                    var level = levels[i] * baseFactor
-                    if (is8D && i % 2 == 0) {
-                        level += 700f
-                    } else if (is8D) {
-                        level -= 700f
-                    }
+                    val level = levels[i] * baseFactor
                     val clamped = level.coerceIn(lo.toFloat(), hi.toFloat()).toInt().toShort()
                     eq.setBandLevel(i.toShort(), clamped)
                 }
@@ -778,4 +785,20 @@ class MusicService : MediaSessionService() {
             }
         }
     }
+}
+
+@androidx.annotation.OptIn(UnstableApi::class)
+private class RotationRenderersFactory(
+    context: Context,
+    processor: RotationAudioProcessor
+) : DefaultRenderersFactory(context) {
+    private val audioSink: AudioSink = DefaultAudioSink.Builder(context)
+        .setAudioProcessors(arrayOf(processor))
+        .build()
+
+    override fun buildAudioSink(
+        context: Context,
+        enableFloatOutput: Boolean,
+        enableAudioTrackPlaybackParams: Boolean
+    ): AudioSink = audioSink
 }
