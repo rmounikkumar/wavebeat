@@ -48,6 +48,7 @@ class MusicService : MediaSessionService() {
     private var player: ExoPlayer? = null
     private var rotationProcessor: RotationAudioProcessor? = null
     private var widenProcessor: WidenAudioProcessor? = null
+    private var reverbProcessor: ReverbAudioProcessor? = null
     private var lastActionFactory: MediaNotification.ActionFactory? = null
     private var lastSession: MediaSession? = null
     private var consecutiveErrors = 0
@@ -165,7 +166,10 @@ class MusicService : MediaSessionService() {
 
         fun setReverb(enabled: Boolean) {
             reverbEnabled = enabled
-            instance?.applyEffects()
+            instance?.let {
+                it.reverbProcessor?.enabled = enabled
+                it.applyEffects()
+            }
         }
 
         fun setLoudness(enabled: Boolean) {
@@ -221,13 +225,15 @@ class MusicService : MediaSessionService() {
             width = 1f + (virtStrength / 1000f) * 1.4f
         }
         widenProcessor = widen
+        val reverb = ReverbAudioProcessor().apply { enabled = reverbEnabled }
+        reverbProcessor = reverb
 
         player = ExoPlayer.Builder(this)
             .setAudioAttributes(audioAttributes, true)
             .setHandleAudioBecomingNoisy(true)
             .setLoadControl(loadControl)
             .setMediaSourceFactory(mediaSourceFactory)
-            .setRenderersFactory(RotationRenderersFactory(this, rotation, widen))
+            .setRenderersFactory(RotationRenderersFactory(this, rotation, widen, reverb))
             .build()
             .apply {
                 playWhenReady = false
@@ -499,13 +505,7 @@ class MusicService : MediaSessionService() {
         val rev = reverb
         if (rev != null) {
             try {
-                rev.enabled = reverbEnabled
-                if (reverbEnabled) {
-                    rev.decayTime = 1800
-                    rev.roomLevel = 300
-                    rev.density = 1000
-                    rev.diffusion = 600
-                }
+                rev.enabled = false
             } catch (_: Exception) {}
         }
 
@@ -801,10 +801,11 @@ class MusicService : MediaSessionService() {
 private class RotationRenderersFactory(
     context: Context,
     rotation: RotationAudioProcessor,
-    widen: WidenAudioProcessor
+    widen: WidenAudioProcessor,
+    reverb: ReverbAudioProcessor
 ) : DefaultRenderersFactory(context) {
     private val audioSink: AudioSink = DefaultAudioSink.Builder(context)
-        .setAudioProcessors(arrayOf(widen, rotation))
+        .setAudioProcessors(arrayOf(widen, reverb, rotation))
         .build()
 
     override fun buildAudioSink(
