@@ -2,6 +2,20 @@
 
 A lightweight, offline-first Android music player built with Kotlin and Media3 (ExoPlayer). Beautiful dark UI with haptics, Equalizer, playlists, favorites, and a fully custom player overlay.
 
+## Screenshots
+
+| Home | Songs | Playlists |
+|:---:|:---:|:---:|
+| ![Home](docs/screenshots/home_dance.png) | ![Songs](docs/screenshots/library_songs.png) | ![Playlists](docs/screenshots/library_playlists.png) |
+
+| Favorites | Playlist detail | Mini player |
+|:---:|:---:|:---:|
+| ![Favorites](docs/screenshots/library_favorites.png) | ![Playlist detail](docs/screenshots/playlist_detail.png) | ![Mini player](docs/screenshots/mini_player.png) |
+
+| Player overlay | Audio | Settings |
+|:---:|:---:|:---:|
+| ![Player overlay](docs/screenshots/player_overlay.png) | ![Audio](docs/screenshots/audio.png) | ![Settings](docs/screenshots/settings.png) |
+
 ## Features
 
 - **Player overlay** — shuffle, prev/next, play/pause, repeat (off / one / all), tap + swipe seek bar
@@ -63,4 +77,4 @@ app/src/main/java/com/wavebeat/
 
 ## License
 
-All rights reserved.
+Released under the [MIT License](LICENSE).
