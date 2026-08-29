@@ -2049,8 +2049,11 @@ applySelectedTab()
             controller.setMediaItems(mediaItems, startIndex, 0)
             controller.prepare()
         } else {
-            controller.setMediaItems(mediaItems, startIndex, controller.currentPosition)
-            controller.prepare()
+            currentSongIndex = controller.currentMediaItemIndex.coerceIn(0, songs.size - 1)
+            runOnUiThread {
+                updateMiniPlayer()
+                refreshHomeCards()
+            }
         }
 
         applyRepeatMode()
