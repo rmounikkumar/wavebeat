@@ -4,9 +4,9 @@ A lightweight, offline-first Android music player built with Kotlin and Media3 (
 
 ## Screenshots
 
-| Home | Songs | Player overlay | Audio |
-|:---:|:---:|:---:|:---:|
-| ![Home](docs/screenshots/home_dance.png) | ![Songs](docs/screenshots/library_songs.png) | ![Player overlay](docs/screenshots/player_overlay.png) | ![Audio](docs/screenshots/audio.png) |
+| Home | Songs | Player overlay | Audio | Settings |
+|:---:|:---:|:---:|:---:|:---:|
+| ![Home](docs/screenshots/home_dance.png) | ![Songs](docs/screenshots/library_songs.png) | ![Player overlay](docs/screenshots/player_overlay.png) | ![Audio](docs/screenshots/audio.png) | ![Settings](docs/screenshots/settings.png) |
 
 ## Features
 
