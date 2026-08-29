@@ -384,7 +384,6 @@ class MusicService : MediaSessionService() {
         val json = prefs.getString("playlist", null) ?: return
         val pIndex = prefs.getInt("index", 0)
         val position = prefs.getLong("position", 0L)
-        val wasPlaying = prefs.getBoolean("playing", false)
         try {
             val arr = JSONArray(json)
             val items = mutableListOf<MediaItem>()
@@ -407,7 +406,7 @@ class MusicService : MediaSessionService() {
             val start = pIndex.coerceIn(0, items.size - 1)
             p.setMediaItems(items, start, position.coerceAtLeast(0L))
             p.prepare()
-            if (wasPlaying && resumeEnabled) p.play() else p.pause()
+            p.pause()
             updateNotification()
         } catch (e: Exception) {
             e.printStackTrace()
