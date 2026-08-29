@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.WaveBeat" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="android:windowBackground">#0A0A0F</item>
+        <item name="android:statusBarColor">#0A0A0F</item>
+        <item name="android:navigationBarColor">#0A0A0F</item>
+    </style>
+
+    <style name="WaveBeatTactile">
+        <item name="android:elevation">3dp</item>
+        <item name="android:stateListAnimator">@animator/tactile_press</item>
+    </style>
+
+    <style name="WaveBeatChip" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">38dp</item>
+        <item name="android:background">@drawable/chip_bg</item>
+        <item name="android:textColor">#DDDDDD</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:minHeight">38dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:maxWidth">80dp</item>
+        <item name="android:layout_marginRight">6dp</item>
+    </style>
+</resources>

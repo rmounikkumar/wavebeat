@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WaveBeat</string>
+    <string name="splash_tagline">Feel every wave</string>
+    <string name="splash_terms">I accept the Terms &amp; Conditions</string>
+    <string name="splash_get_started">Get Started</string>
+    <string name="splash_terms_hint">Please accept the Terms &amp; Conditions first</string>
+</resources>

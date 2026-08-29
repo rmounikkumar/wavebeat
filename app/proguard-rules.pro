@@ -1,0 +1,6 @@
+-keep class com.wavebeat.** { *; }
+-keep class androidx.media3.** { *; }
+-keep class com.google.common.** { *; }
+-keep class com.google.common.util.concurrent.** { *; }
+-dontwarn androidx.media3.**
+-dontwarn com.google.common.**

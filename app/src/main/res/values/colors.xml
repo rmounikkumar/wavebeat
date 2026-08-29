@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background_dark">#0A0A0F</color>
+    <color name="surface_dark">#181826</color>
+    <color name="surface_dark_2">#101017</color>
+    <color name="accent_red">#E94560</color>
+    <color name="accent_light">#FF6B81</color>
+    <color name="accent_mint">#00E5C7</color>
+    <color name="border_dark">#2A2A40</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#999999</color>
+    <color name="text_dim">#555555</color>
+</resources>

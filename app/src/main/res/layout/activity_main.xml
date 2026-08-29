@@ -1,0 +1,1648 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0A0A0F">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <!-- Top bar -->
+    <LinearLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="12dp"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:id="@+id/topBarTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="WaveBeat"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:letterSpacing="0.12"
+            android:gravity="start"/>
+
+        <ImageButton
+            android:id="@+id/searchIcon"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_search"
+            android:scaleType="centerInside"
+            android:padding="10dp"
+            app:tint="#D6D9E4"
+            android:contentDescription="Search songs"/>
+
+        <EditText
+            android:id="@+id/searchField"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            android:background="@drawable/search_field_bg"
+            android:singleLine="true"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:hint="Search all songs"
+            android:textColorHint="#8A8A9C"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:visibility="gone"/>
+
+        <ImageButton
+            android:id="@+id/searchClear"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:scaleType="centerInside"
+            android:padding="11dp"
+            app:tint="#B6B8CC"
+            android:visibility="gone"
+            android:contentDescription="Clear search"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <!-- Home tab (all songs grid) -->
+        <LinearLayout
+            android:id="@+id/homeRoot"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="#0A0A0F"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="14dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="HOME"
+                android:textSize="11sp"
+                android:letterSpacing="0.18"
+                android:textColor="#999999"/>
+
+            <TextView
+                android:id="@+id/homeSubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="All songs"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#F2F2F6"/>
+
+            <com.wavebeat.PullScrollView
+                android:id="@+id/homeScroll"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:scrollbars="none">
+
+                <GridLayout
+                    android:id="@+id/homeGrid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="2"
+                    android:alignmentMode="alignMargins"/>
+            </com.wavebeat.PullScrollView>
+        </LinearLayout>
+
+        <!-- Library tab (Songs / Playlists / Favorites) -->
+        <LinearLayout
+            android:id="@+id/libraryRoot"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="#0A0A0F"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="6dp">
+
+                <TextView
+                    android:id="@+id/libSongsPill"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginRight="4dp"
+                    android:background="@drawable/chip_bg_active"
+                    android:gravity="center"
+                    android:minHeight="42dp"
+                    android:text="Songs"
+                    android:textColor="#00E5C7"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.12"/>
+                <TextView
+                    android:id="@+id/libPlaylistsPill"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:background="@drawable/chip_bg"
+                    android:gravity="center"
+                    android:minHeight="42dp"
+                    android:text="Playlists"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.12"/>
+                <TextView
+                    android:id="@+id/libFavPill"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="4dp"
+                    android:background="@drawable/chip_bg"
+                    android:gravity="center"
+                    android:minHeight="42dp"
+                    android:text="Favorites"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.12"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/libCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="12dp"
+                android:textSize="12sp"
+                android:letterSpacing="0.18"
+                android:textColor="#999999"/>
+
+            <TextView
+                android:id="@+id/newPlaylistBtn"
+                style="@style/WaveBeatTactile"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/accent_card_bg"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="＋ NEW PLAYLIST"
+                android:textColor="#35F2D8"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.15"
+                android:visibility="gone"
+                android:contentDescription="Create new playlist"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <com.wavebeat.PullListView
+                    android:id="@+id/songListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="#1A1A24"
+                    android:dividerHeight="1dp"
+                    android:scrollbars="none"
+                    android:listSelector="@android:color/transparent"
+                    android:visibility="visible"/>
+
+                <ListView
+                    android:id="@+id/playlistListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="#1A1A24"
+                    android:dividerHeight="1dp"
+                    android:scrollbars="none"
+                    android:listSelector="@android:color/transparent"
+                    android:visibility="gone"/>
+
+                <ListView
+                    android:id="@+id/favListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="#1A1A24"
+                    android:dividerHeight="1dp"
+                    android:scrollbars="none"
+                    android:listSelector="@android:color/transparent"
+                    android:visibility="gone"/>
+
+                <LinearLayout
+                    android:id="@+id/playlistDetailRoot"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginRight="14dp"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center_vertical">
+
+                        <ImageButton
+                            android:id="@+id/playlistDetailBack"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:src="@drawable/ic_arrow_back"
+                            app:tint="#00E5C7"
+                            android:padding="9dp"
+                            android:contentDescription="Back to playlists"/>
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1"/>
+
+                        <ImageButton
+                            android:id="@+id/playlistDetailRename"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:src="@drawable/ic_rename"
+                            app:tint="#00E5C7"
+                            android:padding="9dp"
+                            android:contentDescription="Rename playlist"/>
+
+                        <ImageButton
+                            android:id="@+id/playlistDetailDelete"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:src="@drawable/ic_delete"
+                            app:tint="#FF5C5C"
+                            android:padding="10dp"
+                            android:contentDescription="Delete playlist"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/playlistDetailTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="2dp"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF"
+                        android:maxLines="1"
+                        android:ellipsize="end"/>
+
+                    <TextView
+                        android:id="@+id/playlistDetailCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="2dp"
+                        android:textSize="12sp"
+                        android:textColor="#999999"/>
+
+                    <TextView
+                        android:id="@+id/playlistDetailAddSongs"
+                        style="@style/WaveBeatTactile"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/accent_card_bg"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:text="＋ ADD SONGS"
+                        android:textColor="#00E5C7"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.15"
+                        android:contentDescription="Add songs to playlist"/>
+
+                    <ListView
+                        android:id="@+id/playlistDetailListView"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginTop="8dp"
+                        android:divider="#1A1A24"
+                        android:dividerHeight="1dp"
+                        android:scrollbars="none"
+                        android:listSelector="@android:color/transparent"/>
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+
+        <!-- Audio Enhancement tab -->
+        <ScrollView
+            android:id="@+id/audioScroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/audio_bg"
+            android:fillViewport="true"
+            android:scrollbars="none"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="20dp">
+
+                <!-- Header banner -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="88dp"
+                    android:background="@drawable/header_card"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="14dp">
+
+                    <FrameLayout
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:background="@drawable/glow_ring">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_eq"
+                            android:contentDescription="Equalizer"/>
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="14dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Audio Enhancement"
+                            android:textSize="19sp"
+                            android:textStyle="bold"
+                            android:letterSpacing="0.05"
+                            android:textColor="#FFFFFF"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:text="Equalizer · 3D · Surround"
+                            android:textSize="12sp"
+                            android:textColor="#7FC7BF"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/premium_pill"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:text="PRO"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.22"
+                        android:textColor="#00E5C7"/>
+                </LinearLayout>
+
+                <!-- EQ presets -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:text="EQUALIZER PRESETS"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.18"
+                    android:textColor="#999999"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tap a preset to apply instantly"
+                    android:textSize="10sp"
+                    android:textColor="#555555"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/section_card"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <GridLayout
+                        android:id="@+id/presetGrid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:columnCount="4"
+                        android:rowCount="2"/>
+                </LinearLayout>
+
+                <!-- Sound effects -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:text="SOUND EFFECTS"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.18"
+                    android:textColor="#999999"/>
+
+                <LinearLayout
+                    android:id="@+id/toggleRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/section_card"
+                    android:orientation="vertical"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="12dp">
+
+                    <!-- 8D row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/icon_chip"
+                            android:padding="8dp"
+                            android:src="@drawable/ic_sound_8d"
+                            android:contentDescription="8D"
+                            app:tint="#B6B8CC"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginStart="14dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="8D Rotation"
+                                android:textSize="15sp"
+                                android:textColor="#F2F2F6"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Spatial panning sphere"
+                                android:textSize="11sp"
+                                android:textColor="#8A8A9C"/>
+                        </LinearLayout>
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/btn8D"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="8D Rotation"
+                            android:track="@drawable/switch_track"
+                            android:thumb="@drawable/switch_thumb"/>
+                    </LinearLayout>
+
+                    <!-- 3D row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/icon_chip"
+                            android:padding="8dp"
+                            android:src="@drawable/ic_sound_3d"
+                            android:contentDescription="3D"
+                            app:tint="#B6B8CC"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginStart="14dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="3D Virtualizer"
+                                android:textSize="15sp"
+                                android:textColor="#F2F2F6"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Widen the soundstage"
+                                android:textSize="11sp"
+                                android:textColor="#8A8A9C"/>
+                        </LinearLayout>
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/btn3D"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="3D Virtualizer"
+                            android:track="@drawable/switch_track"
+                            android:thumb="@drawable/switch_thumb"/>
+                    </LinearLayout>
+
+                    <!-- Bass row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/icon_chip"
+                            android:padding="8dp"
+                            android:src="@drawable/ic_sound_bass"
+                            android:contentDescription="Bass Boost"
+                            app:tint="#B6B8CC"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginStart="14dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Bass Boost"
+                                android:textSize="15sp"
+                                android:textColor="#F2F2F6"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Subwoofer rumble"
+                                android:textSize="11sp"
+                                android:textColor="#8A8A9C"/>
+                        </LinearLayout>
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/btnBassBoost"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="Bass Boost"
+                            android:track="@drawable/switch_track"
+                            android:thumb="@drawable/switch_thumb"/>
+                    </LinearLayout>
+
+                    <!-- Reverb row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/icon_chip"
+                            android:padding="8dp"
+                            android:src="@drawable/ic_sound_reverb"
+                            android:contentDescription="Reverb"
+                            app:tint="#B6B8CC"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginStart="14dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Reverb"
+                                android:textSize="15sp"
+                                android:textColor="#F2F2F6"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Add room ambience"
+                                android:textSize="11sp"
+                                android:textColor="#8A8A9C"/>
+                        </LinearLayout>
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/btnReverb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="Reverb"
+                            android:track="@drawable/switch_track"
+                            android:thumb="@drawable/switch_thumb"/>
+                    </LinearLayout>
+
+                    <!-- Loudness row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/icon_chip"
+                            android:padding="8dp"
+                            android:src="@drawable/ic_sound_loud"
+                            android:contentDescription="Loudness"
+                            app:tint="#B6B8CC"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginStart="14dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Loudness"
+                                android:textSize="15sp"
+                                android:textColor="#F2F2F6"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Boost perceived volume"
+                                android:textSize="11sp"
+                                android:textColor="#8A8A9C"/>
+                        </LinearLayout>
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/btnLoudness"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="Loudness"
+                            android:track="@drawable/switch_track"
+                            android:thumb="@drawable/switch_thumb"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Effect strength -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:text="EFFECT STRENGTH"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.18"
+                    android:textColor="#999999"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/section_card"
+                    android:orientation="vertical"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_strength"
+                            android:contentDescription="Strength"
+                            app:tint="#BBBBBB"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="9dp"
+                            android:text="Effect Strength"
+                            android:textSize="13sp"
+                            android:textColor="#DDDDDD"/>
+
+                        <TextView
+                            android:id="@+id/intensityVal"
+                            android:layout_width="46dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/pill_bg"
+                            android:text="50"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="#00E5C7"
+                            android:gravity="center"/>
+                    </LinearLayout>
+
+                    <SeekBar
+                        android:id="@+id/intensitySeek"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:max="100"
+                        android:progress="50"
+                        android:progressTint="#E94560"
+                        android:thumbTint="#E94560"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/dolbyBtn"
+                    style="@style/WaveBeatTactile"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/accent_card_bg"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="DOLBY ATMOS   •   SYSTEM SETTINGS"
+                    android:textColor="#35F2D8"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.15"
+                    android:contentDescription="Open Dolby Atmos settings"/>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- Settings tab -->
+        <ScrollView
+            android:id="@+id/settingsScroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="SETTINGS"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.18"
+                    android:textColor="#999999"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/section_card"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="12dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/icon_chip"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_sparkle"
+                        android:contentDescription="Auto Enhance"
+                        app:tint="#B6B8CC"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="14dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Auto-Enhance"
+                            android:textSize="15sp"
+                            android:textColor="#F2F2F6"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Suggest an EQ preset for each song"
+                            android:textSize="11sp"
+                            android:textColor="#8A8A9C"/>
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/autoEnhanceSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:track="@drawable/switch_track"
+                        android:thumb="@drawable/switch_thumb"
+                        android:contentDescription="Auto-Enhance"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:text="TWEAKS"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.18"
+                    android:textColor="#999999"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/section_card"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="12dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/icon_chip"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_logo"
+                        android:contentDescription="Animated Logo"
+                        app:tint="#B6B8CC"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="14dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Animated Logo"
+                            android:textSize="15sp"
+                            android:textColor="#F2F2F6"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Dancing waves on the player"
+                            android:textSize="11sp"
+                            android:textColor="#8A8A9C"/>
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/danceSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:track="@drawable/switch_track"
+                        android:thumb="@drawable/switch_thumb"
+                        android:contentDescription="Animated Logo"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/section_card"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="12dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/icon_chip"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_queue"
+                        android:contentDescription="Auto Next"
+                        app:tint="#B6B8CC"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="14dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Auto-Next Track"
+                            android:textSize="15sp"
+                            android:textColor="#F2F2F6"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Pause after every song when off"
+                            android:textSize="11sp"
+                            android:textColor="#8A8A9C"/>
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/autoNextSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:track="@drawable/switch_track"
+                        android:thumb="@drawable/switch_thumb"
+                        android:contentDescription="Auto Next Track"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/section_card"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="12dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/icon_chip"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_music_note"
+                        android:contentDescription="Auto Resume"
+                        app:tint="#B6B8CC"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="14dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Auto-Resume"
+                            android:textSize="15sp"
+                            android:textColor="#F2F2F6"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Keep playing after reopening the app"
+                            android:textSize="11sp"
+                            android:textColor="#8A8A9C"/>
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/resumeSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:track="@drawable/switch_track"
+                        android:thumb="@drawable/switch_thumb"
+                        android:contentDescription="Auto Resume"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/section_card"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="12dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/icon_chip"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_sound_loud"
+                        android:contentDescription="Haptics"
+                        app:tint="#B6B8CC"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="14dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Track Haptics"
+                            android:textSize="15sp"
+                            android:textColor="#F2F2F6"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Subtle vibration on track change"
+                            android:textSize="11sp"
+                            android:textColor="#8A8A9C"/>
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/hapticSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:track="@drawable/switch_track"
+                        android:thumb="@drawable/switch_thumb"
+                        android:contentDescription="Track Haptics"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/section_card"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="12dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/icon_chip"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_music_note"
+                        android:contentDescription="Nav-Bar Haptics"
+                        app:tint="#B6B8CC"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="14dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nav-Bar Haptics"
+                            android:textSize="15sp"
+                            android:textColor="#F2F2F6"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Vibrate when tapping the bottom bar"
+                            android:textSize="11sp"
+                            android:textColor="#8A8A9C"/>
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/navHapticSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:track="@drawable/switch_track"
+                        android:thumb="@drawable/switch_thumb"
+                        android:contentDescription="Nav-Bar Haptics"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/section_card"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="12dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/icon_chip"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_strength"
+                        android:contentDescription="Keep Screen Awake"
+                        app:tint="#B6B8CC"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="14dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Keep Screen Awake"
+                            android:textSize="15sp"
+                            android:textColor="#F2F2F6"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Stop the screen from sleeping"
+                            android:textSize="11sp"
+                            android:textColor="#8A8A9C"/>
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/keepAwakeSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:track="@drawable/switch_track"
+                        android:thumb="@drawable/switch_thumb"
+                        android:contentDescription="Keep Screen Awake"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:text="EFFECT STRENGTH"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.18"
+                    android:textColor="#999999"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/section_card"
+                    android:orientation="vertical"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_strength"
+                            android:contentDescription="Strength"
+                            app:tint="#BBBBBB"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="9dp"
+                            android:text="Effect Strength"
+                            android:textSize="13sp"
+                            android:textColor="#DDDDDD"/>
+
+                        <TextView
+                            android:id="@+id/tweakIntensityVal"
+                            android:layout_width="46dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/pill_bg"
+                            android:text="50"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="#E94560"
+                            android:gravity="center"/>
+                    </LinearLayout>
+
+                    <SeekBar
+                        android:id="@+id/tweakIntensitySeek"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:max="100"
+                        android:progress="50"
+                        android:paddingTop="9dp"
+                        android:paddingBottom="9dp"
+                        android:progressDrawable="@drawable/effect_track"
+                        android:thumb="@drawable/effect_thumb"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </FrameLayout>
+
+    <!-- Mini now-playing bar (Spotify-style) -->
+    <LinearLayout
+        android:id="@+id/miniPlayer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/mini_player_bg"
+        android:foreground="?attr/selectableItemBackground"
+        android:visibility="gone"
+        android:contentDescription="Now playing">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingLeft="18dp"
+            android:paddingRight="14dp">
+
+            <ImageView
+                android:id="@+id/miniArt"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/icon_chip"
+                android:contentDescription="Album art"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="14dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/miniTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="#F2F2F6"
+                    android:textStyle="bold"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
+
+                <TextView
+                    android:id="@+id/miniArtist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="#8A8A9C"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/miniPlay"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/spotify_play_bg"
+                android:src="@drawable/ic_spotify_play"
+                android:scaleType="centerInside"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Play or pause"/>
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/miniProgress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:maxHeight="3dp"
+            android:minHeight="3dp"
+            android:max="1000"
+            android:progressTint="#00E5C7"
+            android:progressBackgroundTint="#1F1F30"/>
+    </LinearLayout>
+
+    <!-- Bottom navigation -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0E0E16"
+        android:elevation="10dp"
+        app:itemIconSize="26dp"
+        app:itemIconTint="@color/nav_item_color"
+        app:itemTextColor="@color/nav_item_color"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/menu_bottom_nav"/>
+    </LinearLayout>
+
+    <!-- Full player overlay (covers top bar, mini bar and nav) -->
+    <FrameLayout
+        android:id="@+id/playerOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#0A0A0F"
+        android:visibility="gone">
+
+        <ScrollView
+            android:id="@+id/playerScroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="top"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="20dp">
+
+                <!-- Album art -->
+                <ImageView
+                    android:id="@+id/albumArt"
+                    android:layout_width="280dp"
+                    android:layout_height="280dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginBottom="26dp"
+                    android:background="@drawable/album_art_bg"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_logo"/>
+
+                <!-- Metadata -->
+                <TextView
+                    android:id="@+id/songTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="WaveBeat"
+                    android:textSize="21sp"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:singleLine="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"/>
+
+                <TextView
+                    android:id="@+id/songArtist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Select a song to play"
+                    android:textSize="14sp"
+                    android:textColor="#999999"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"/>
+
+                <!-- Section spacer (mirrors Spotify footer gap) -->
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"/>
+
+                <!-- Seekbar -->
+                <SeekBar
+                    android:id="@+id/seekBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:progressDrawable="@drawable/seekbar_track"
+                    android:thumb="@drawable/seekbar_thumb"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="4dp">
+
+                    <TextView
+                        android:id="@+id/currentTime"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="0:00"
+                        android:textSize="12sp"
+                        android:textColor="#888888"/>
+
+                    <TextView
+                        android:id="@+id/totalTime"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="0:00"
+                        android:textSize="12sp"
+                        android:textColor="#888888"
+                        android:gravity="end"/>
+                </LinearLayout>
+
+                <!-- Transport -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="22dp">
+
+                    <ImageButton
+                        android:id="@+id/shuffleBtn"
+                        style="@style/WaveBeatTactile"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_shuffle"
+                        android:scaleType="centerInside"
+                        app:tint="#9CA0A6"
+                        android:layout_marginEnd="16dp"
+                        android:contentDescription="Shuffle"/>
+
+                    <ImageButton
+                        android:id="@+id/prevBtn"
+                        style="@style/WaveBeatTactile"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@android:drawable/ic_media_previous"
+                        android:scaleType="centerInside"
+                        app:tint="#FFFFFF"
+                        android:layout_marginEnd="16dp"
+                        android:contentDescription="Previous"/>
+
+                    <ImageButton
+                        android:id="@+id/playBtn"
+                        style="@style/WaveBeatTactile"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:background="@drawable/spotify_play_bg"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:src="@drawable/ic_spotify_play"
+                        android:scaleType="centerInside"
+                        android:layout_marginEnd="16dp"
+                        android:contentDescription="Play"/>
+
+                    <ImageButton
+                        android:id="@+id/nextBtn"
+                        style="@style/WaveBeatTactile"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@android:drawable/ic_media_next"
+                        android:scaleType="centerInside"
+                        app:tint="#FFFFFF"
+                        android:layout_marginEnd="16dp"
+                        android:contentDescription="Next"/>
+
+                    <ImageButton
+                        android:id="@+id/repeatBtn"
+                        style="@style/WaveBeatTactile"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_repeat"
+                        android:scaleType="centerInside"
+                        app:tint="#9CA0A6"
+                        android:layout_marginStart="16dp"
+                        android:contentDescription="Repeat"/>
+                </LinearLayout>
+
+                <!-- Action row (favorite + sleep timer, below dancing art) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp">
+
+                    <ImageButton
+                        android:id="@+id/favBtn"
+                        style="@style/WaveBeatTactile"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_fav_outline"
+                        android:scaleType="centerInside"
+                        app:tint="#B6B8CC"
+                        android:alpha="0.8"
+                        android:contentDescription="Favorite current song"/>
+
+                    <Space
+                        android:layout_width="24dp"
+                        android:layout_height="1dp"/>
+
+                    <ImageButton
+                        android:id="@+id/sleepBtn"
+                        style="@style/WaveBeatTactile"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_sleep"
+                        android:scaleType="centerInside"
+                        app:tint="#00E5C7"
+                        android:alpha="0.55"
+                        android:contentDescription="Sleep timer"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/sleepLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#00E5C7"
+                    android:text=""/>
+
+                <TextView
+                    android:id="@+id/lyricsBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/pill_bg"
+                    android:paddingLeft="22dp"
+                    android:paddingRight="22dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:gravity="center"
+                    android:text="LYRICS"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.18"
+                    android:textColor="#9BE8DE"/>
+
+                <TextView
+                    android:id="@+id/lyricsPanelTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:gravity="center"
+                    android:text="LYRICS"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.2"
+                    android:textColor="#FFFFFF"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/lyricsText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="6dp"
+                    android:textColor="#D8D8E0"
+                    android:gravity="center"
+                    android:visibility="gone"/>
+            </LinearLayout>
+        </ScrollView>
+
+        <ImageButton
+            android:id="@+id/playerOverlayClose"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            app:tint="#FFFFFF"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:contentDescription="Collapse player"/>
+    </FrameLayout>
+</FrameLayout>

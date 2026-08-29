@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:background="?attr/selectableItemBackground"
+    android:stateListAnimator="@animator/tactile_press"
+    android:elevation="2dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
+
+    <TextView
+        android:id="@+id/songIndex"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="#555555"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/songRowTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="15sp"
+        android:textColor="#FFFFFF"
+        android:maxLines="1"
+        android:ellipsize="end"/>
+
+    <TextView
+        android:id="@+id/songRowArtist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="#888888"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:paddingLeft="8dp"/>
+
+    <ImageButton
+        android:id="@+id/favIcon"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_fav_outline"
+        android:scaleType="centerInside"
+        android:padding="7dp"
+        android:contentDescription="Favorite"/>
+
+</LinearLayout>

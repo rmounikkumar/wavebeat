@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="true" android:state_pressed="true">
+        <set>
+            <objectAnimator
+                android:duration="110"
+                android:propertyName="translationZ"
+                android:valueTo="10dp"
+                android:valueType="floatType"/>
+            <objectAnimator
+                android:duration="110"
+                android:propertyName="translationY"
+                android:valueTo="3dp"
+                android:valueType="floatType"/>
+            <objectAnimator
+                android:duration="0"
+                android:propertyName="elevation"
+                android:valueTo="10dp"
+                android:valueType="floatType"/>
+        </set>
+    </item>
+    <item>
+        <set>
+            <objectAnimator
+                android:duration="140"
+                android:propertyName="translationZ"
+                android:valueTo="0dp"
+                android:valueType="floatType"/>
+            <objectAnimator
+                android:duration="140"
+                android:propertyName="translationY"
+                android:valueTo="0dp"
+                android:valueType="floatType"/>
+            <objectAnimator
+                android:duration="0"
+                android:propertyName="elevation"
+                android:valueTo="3dp"
+                android:valueType="floatType"/>
+        </set>
+    </item>
+</selector>
