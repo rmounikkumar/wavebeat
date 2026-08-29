@@ -47,6 +47,7 @@ class MusicService : MediaSessionService() {
     private var mediaSession: MediaSession? = null
     private var player: ExoPlayer? = null
     private var rotationProcessor: RotationAudioProcessor? = null
+    private var widenProcessor: WidenAudioProcessor? = null
     private var lastActionFactory: MediaNotification.ActionFactory? = null
     private var lastSession: MediaSession? = null
     private var consecutiveErrors = 0
@@ -155,7 +156,11 @@ class MusicService : MediaSessionService() {
 
         fun setVirtualizerStrength(value: Int) {
             virtStrength = value.coerceIn(0, 1000)
-            instance?.applyEffects()
+            instance?.let {
+                it.widenProcessor?.enabled = value > 0
+                it.widenProcessor?.width = 1f + (value / 1000f) * 1.4f
+                it.applyEffects()
+            }
         }
 
         fun setReverb(enabled: Boolean) {
@@ -211,13 +216,18 @@ class MusicService : MediaSessionService() {
 
         val rotation = RotationAudioProcessor().apply { enabled = is8D }
         rotationProcessor = rotation
+        val widen = WidenAudioProcessor().apply {
+            enabled = virtStrength > 0
+            width = 1f + (virtStrength / 1000f) * 1.4f
+        }
+        widenProcessor = widen
 
         player = ExoPlayer.Builder(this)
             .setAudioAttributes(audioAttributes, true)
             .setHandleAudioBecomingNoisy(true)
             .setLoadControl(loadControl)
             .setMediaSourceFactory(mediaSourceFactory)
-            .setRenderersFactory(RotationRenderersFactory(this, rotation))
+            .setRenderersFactory(RotationRenderersFactory(this, rotation, widen))
             .build()
             .apply {
                 playWhenReady = false
@@ -790,10 +800,11 @@ class MusicService : MediaSessionService() {
 @androidx.annotation.OptIn(UnstableApi::class)
 private class RotationRenderersFactory(
     context: Context,
-    processor: RotationAudioProcessor
+    rotation: RotationAudioProcessor,
+    widen: WidenAudioProcessor
 ) : DefaultRenderersFactory(context) {
     private val audioSink: AudioSink = DefaultAudioSink.Builder(context)
-        .setAudioProcessors(arrayOf(processor))
+        .setAudioProcessors(arrayOf(widen, rotation))
         .build()
 
     override fun buildAudioSink(
